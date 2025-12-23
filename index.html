@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Profile Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         video {
             position: fixed;
@@ -14,43 +15,118 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+            filter: brightness(0.6);
+        }
+
+        .glass-box {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        @keyframes neon-glow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #a855f7, 0 0 40px #a855f7;
+            }
+
+            50% {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #a855f7, 0 0 20px #a855f7;
+            }
+        }
+
+        .neon-text {
+            animation: neon-glow 2s ease-in-out infinite;
+        }
+
+        .profile-img {
+            border: 3px solid #a855f7;
+            box-shadow: 0 0 20px #a855f7;
+        }
+
+        .click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.8));
         }
     </style>
 </head>
-<body>
-<!-- Background video -->
-<video autoplay loop muted
->
-<source src="assets/videos/wasure_mono.mp4" type="video/mp4">
 
-</video>
-<!-- Background audio -->
- <audio id="bg-audio" loop>
-    <source src="assets/audios/wasure_mono.m4a" type="audio/mpeg">
- </audio>
-  <div id="click-overlay"
-        class="z-10 cursor-pointer text-center bg-black/50 p-4 rounded-lg backdrop-blur-sm hover:bg-black/70 transition">
-        <h1 class="text-2xl font-bold">Click anywhere to start</h1>
+<body class="h-screen w-screen flex items-center justify-center text-white bg-black overflow-hidden">
+    <!-- Background Video -->
+    <video autoplay loop muted playsinline>
+        <source src="assets/videos/rewrite_overme.mp4" type="video/mp4">
+    </video>
+
+    <!-- Background Audio -->
+    <audio id="bg-audio" loop>
+        <source src="assets/audios/rewrite_overme.m4a" type="audio/mp4">
+    </audio>
+
+    <!-- Click to Start Overlay -->
+    <div id="click-overlay" class="click-overlay cursor-pointer">
+        <div
+            class="text-center bg-gradient-to-r from-purple-600 to-pink-600 p-8 rounded-2xl hover:scale-105 transition-transform">
+            <h1 class="text-3xl font-bold mb-2">Click to Enter</h1>
+            <p class="text-sm opacity-80">音楽が流れます</p>
+        </div>
     </div>
- <script>
-        // ดึง Element Audio และ Overlay
+
+    
+
+    <!-- Audio Control (Bottom Right) -->
+    <button id="audio-control" onclick="toggleAudio()"
+        class="fixed bottom-6 right-6 glass-box px-4 py-3 rounded-full text-white hover:bg-purple-500/20 transition z-50">
+        <span id="audio-icon">🔊</span>
+    </button>
+
+    <script>
         const audio = document.getElementById('bg-audio');
         const overlay = document.getElementById('click-overlay');
-    audio.volume =0.05;
-        // สร้างฟังก์ชันเล่นเสียง
+        let audioPlaying = false;
+
+        // Set volume
+        audio.volume = 0.3;
+
         function startAudio() {
             audio.play().then(() => {
-                // ถ้าเล่นสำเร็จ ให้ซ่อนข้อความ
                 overlay.style.display = 'none';
+                audioPlaying = true;
             }).catch(error => {
                 console.log("Autoplay blocked:", error);
             });
-
-            // ลบ Event Listener ออก เพื่อไม่ให้กดซ้ำแล้วเสียงเริ่มใหม่
             document.removeEventListener('click', startAudio);
         }
-        // ดักจับการคลิกบนหน้าเว็บ
+
+        function toggleAudio() {
+            const icon = document.getElementById('audio-icon');
+            if (audioPlaying) {
+                audio.pause();
+                icon.textContent = '🔇';
+                audioPlaying = false;
+            } else {
+                audio.play();
+                icon.textContent = '🔊';
+                audioPlaying = true;
+            }
+        }
+
         document.addEventListener('click', startAudio);
     </script>
-</body>    
+</body>
+
 </html>
