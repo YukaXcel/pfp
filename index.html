@@ -86,13 +86,20 @@
         </div>
     </div>
 
-    
+    <!-- Main profile box -->
+    <div class="glass-box rounded-3xl p-8 max-w-md w-full mx-4 space-y-6 text-center">
+        <div class="flex justify-center">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzY5Ngzt37qnK_VtTBcyznqYnu3q3Ub7go2Q&s" alt="profile" class="profile-img w-32 h-32 rounded-full">
+        </div>
+        <h1 class="neon-text text-4xl font-bold">hi</h1>
 
-    <!-- Audio Control (Bottom Right) -->
-    <button id="audio-control" onclick="toggleAudio()"
+        
+        <!-- Audio Control (Bottom Right) -->
+        <button id="audio-control" onclick="toggleAudio()"
         class="fixed bottom-6 right-6 glass-box px-4 py-3 rounded-full text-white hover:bg-purple-500/20 transition z-50">
         <span id="audio-icon">🔊</span>
     </button>
+</div>
 
     <script>
         const audio = document.getElementById('bg-audio');
